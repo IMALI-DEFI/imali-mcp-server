@@ -1,0 +1,38 @@
+{
+  "name": "imali-mcp",
+  "version": "0.1.0",
+  "description": "IMALI for AI assistants: free Portfolio Grader and demo trading signals. Read-only, no account, no trading tools.",
+  "mcpName": "io.github.IMALI-DEFI/imali-mcp",
+  "type": "module",
+  "bin": {
+    "imali-mcp": "src/server.js"
+  },
+  "main": "src/server.js",
+  "files": [
+    "src/",
+    "README.md",
+    "server.json"
+  ],
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "crypto",
+    "stocks",
+    "portfolio",
+    "trading-education",
+    "claude"
+  ],
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "zod": "^3.25.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
