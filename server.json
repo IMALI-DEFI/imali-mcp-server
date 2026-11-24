@@ -2,15 +2,19 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.IMALI-DEFI/imali-mcp",
   "description": "IMALI: free A–F Portfolio Grader plus demo trading signals. Read-only, no account.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "imali-mcp",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "transport": {
         "type": "stdio"
       }
     }
-  ]
+  ],
+  "repository": {
+    "url": "https://github.com/IMALI-DEFI/imali-mcp-server",
+    "source": "github"
+  }
 }
