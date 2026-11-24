@@ -8,7 +8,7 @@ import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { createClient } from './client.js';
 import { buildTools } from './tools.js';
 
-const VERSION = '0.1.1';
+const VERSION = '0.2.0';
 const client = createClient({
   baseUrl: process.env.IMALI_API_URL || 'https://api.imali-defi.com',
   userAgent: `imali-mcp/${VERSION}`,

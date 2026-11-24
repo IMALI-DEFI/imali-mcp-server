@@ -51,7 +51,7 @@ export function gradePortfolio(holdings) {
     largest_position: { symbol: top.symbol, weight: pct(top.w) },
     allocation: { crypto: pct(byKind.crypto), stocks: pct(byKind.stock), cash: pct(byKind.cash) },
     tips,
-    next_step: 'Want this automated and rebalanced across all your exchanges in one place? Try IMALI free: https://imali-defi.com',
+    next_step: 'Want this automated and rebalanced across all your exchanges in one place? Try IMALI free: https://imali-defi.com/?utm_source=mcp&utm_medium=imali-mcp&utm_campaign=portfolio_grader',
   };
 }
 
