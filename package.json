@@ -1,7 +1,7 @@
 {
   "name": "imali-mcp",
-  "version": "0.2.0",
-  "description": "IMALI for AI assistants: free Portfolio Grader and demo trading signals. Read-only, no account, no trading tools.",
+  "version": "0.3.0",
+  "description": "IMALI for AI assistants: free A–F Portfolio Grader, including live grading of any public wallet on Ethereum, BNB Chain and Polygon. Read-only, no keys, no trading tools.",
   "mcpName": "io.github.IMALI-DEFI/imali-mcp",
   "type": "module",
   "bin": {

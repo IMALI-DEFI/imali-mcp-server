@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { ENDPOINTS } from './endpoints.js';
 import { gradePortfolio } from './grader.js';
+import { readWallet, isAddress, CHAINS } from './wallet.js';
 
 // Deliberately READ-ONLY and keyless: no tool here can place, cancel or change
 // a trade, a bot, a connected exchange or a plan, and no user key is ever used.
@@ -14,7 +15,7 @@ const fail = e => ({ content: [{ type: 'text', text: `Error: ${e?.message || e}`
 
 const symbol = z.string().regex(/^[A-Za-z0-9.\-]{1,15}$/).describe('Ticker, e.g. BTC, ETH, AAPL');
 
-export function buildTools({ client }) {
+export function buildTools({ client, walletReader = readWallet }) {
   return [
     {
       name: 'grade_portfolio',
@@ -29,6 +30,26 @@ export function buildTools({ client }) {
         })).min(1).max(100),
       },
       handler: async ({ holdings }) => out(gradePortfolio(holdings)),
+    },
+    {
+      name: 'grade_wallet',
+      description:
+        'Live IMALI Portfolio Grader for a crypto wallet: reads the PUBLIC balances of a wallet address on Ethereum, ' +
+        'BNB Chain and Polygon right now, prices them in USD and grades the portfolio A–F with tips. Read-only: it only ' +
+        'needs the public 0x address, never a private key or seed phrase. Covers major coins and stablecoins on those chains.',
+      shape: {
+        address: z.string().refine(isAddress, 'Expected a 0x wallet address (42 characters)').describe('Public wallet address, 0x…'),
+        chains: z.array(z.enum(Object.keys(CHAINS))).min(1).optional().describe('Chains to read (default: ethereum, bsc, polygon)'),
+      },
+      handler: async ({ address, chains }) => {
+        const w = await walletReader(address, chains);
+        if (!w.holdings.length) {
+          const why = w.chain_errors.length ? ` Could not read: ${w.chain_errors.join('; ')}.` : '';
+          return out({ address, message: 'No priced balances of $1 or more found for the supported coins on these chains.' + why, chains_read: w.chains_read, read_at: w.read_at });
+        }
+        return out({ address, ...gradePortfolio(w.holdings), live_balances: w.assets, chains_read: w.chains_read, chain_errors: w.chain_errors, unpriced: w.unpriced, read_at: w.read_at,
+          note: 'On-chain balances only: coins held on exchanges or other chains are not included.' });
+      },
     },
     {
       name: 'demo_signals',
